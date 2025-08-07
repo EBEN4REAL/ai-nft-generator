@@ -210,36 +210,84 @@ function App() {
   };
 
   return (
-    <div>
+    <div style={{position: "relative", minHeight: "100vh"}}>
       <Navigation account={account} setAccount={setAccount} />
+      <div class="lines_1"></div>
+      <div class="lines_2"></div>
+      <div class="glow_1"></div>
+      <div class="glow_2"></div>
 
-      <div className="form">
-        <form onSubmit={submitHandler}>
-          <input
-            type="text"
-            placeholder="Create a name..."
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          />
-          <input
-            type="text"
-            placeholder="Create a description..."
-            onChange={(e) => setDescription(e.target.value)}
-          />
-          <input type="submit" value="Create & Mint" />
+      <div className="nft-form-container">
+        <form onSubmit={submitHandler} className="nft-form">
+          <div className="form-group">
+            <label htmlFor="nft-name">NFT Name</label>
+            <input
+              id="nft-name"
+              type="text"
+              placeholder="Create a name (e.g. Cyber Lion)"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              minLength={3}
+              maxLength={30}
+              className="form-input"
+            />
+            <small className="character-count">{name.length}/30</small>
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="nft-description">Description</label>
+            <textarea
+              id="nft-description"
+              placeholder="Describe your NFT (e.g. A futuristic lion with cybernetic enhancements)"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+              minLength={10}
+              maxLength={150}
+              rows={4}
+              className="form-textarea"
+            />
+            <small className="character-count">{description.length}/150</small>
+          </div>
+
+          <button type="submit" className="mint-button" disabled={isWaiting}>
+            {isWaiting ? (
+              <>
+                <Spinner animation="border" size="sm" className="me-2" />
+                {message}
+              </>
+            ) : (
+              "Create & Mint"
+            )}
+          </button>
         </form>
 
-        <div className="image">
+        <div className="image-preview">
           {!isWaiting && image ? (
-            <img src={image} alt="AI generated" />
+            <>
+              <img
+                src={image}
+                alt="AI generated NFT"
+                className="preview-image"
+              />
+              <div className="image-overlay">
+                <h3>{name || "Untitled NFT"}</h3>
+                <p>{description || "No description provided"}</p>
+              </div>
+            </>
           ) : isWaiting ? (
-            <div className="image__placeholder">
-              <Spinner animation="border" />
-              <p>{message}</p>
+            <div className="loading-state">
+              <Spinner animation="border" variant="primary" />
+              <p className="loading-text">{message}</p>
             </div>
           ) : (
-            <></>
+            <div className="empty-state">
+              <div className="placeholder-icon">
+                <i className="fas fa-image"></i>
+              </div>
+              <p>Your AI-generated NFT will appear here</p>
+            </div>
           )}
         </div>
       </div>
