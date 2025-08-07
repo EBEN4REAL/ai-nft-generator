@@ -10,8 +10,11 @@
 - [NFT.Storage](https://nft.storage/) (Connection to IPFS)
 - [Hugging Face](https://huggingface.co/) (AI Models)
 
-## Snapshot
+## Snapshots
 ![AI NFT Generator Screenshot](public/image.png)
+
+![alt text](public/snapshot2.png)
+
 
 ## Requirements For Initial Setup
 - Install [NodeJS](https://nodejs.org/en/)
